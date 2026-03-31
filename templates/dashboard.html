@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mt-4">
+    <!-- Left Column: Operations -->
+    <div class="col-md-5">
+        <h3 class="fw-bold mb-4" style="color: #66fcf1;">Calculations</h3>
+        
+        <ul class="nav nav-pills mb-3 flex-wrap gap-2" id="geometryTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold text-light rounded-pill px-3" id="point-tab" data-bs-toggle="tab" data-bs-target="#point" type="button" role="tab">Point</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold text-light rounded-pill px-3" id="line-tab" data-bs-toggle="tab" data-bs-target="#line" type="button" role="tab">Line</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold text-light rounded-pill px-3" id="triangle-tab" data-bs-toggle="tab" data-bs-target="#triangle" type="button" role="tab">Triangle</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold text-light rounded-pill px-3" id="circle-tab" data-bs-toggle="tab" data-bs-target="#circle" type="button" role="tab">Circle</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold text-light rounded-pill px-3" id="poly-tab" data-bs-toggle="tab" data-bs-target="#poly" type="button" role="tab">Polygon</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="geometryTabsContent">
+            <!-- Point Form -->
+            <div class="tab-pane fade show active" id="point" role="tabpanel">
+                <div class="card p-4 rounded-4 shadow mb-4">
+                    <form action="{{ url_for('calculate') }}" method="POST">
+                        <h5 class="fw-bold mb-3" style="color: #45a29e;">Two Points</h5>
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <label class="form-label text-muted small">P1 (x, y)</label>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" step="any" name="x1" class="form-control bg-dark text-light border-secondary" placeholder="x1" required>
+                                    <input type="number" step="any" name="y1" class="form-control bg-dark text-light border-secondary" placeholder="y1" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label text-muted small">P2 (x, y)</label>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" step="any" name="x2" class="form-control bg-dark text-light border-secondary" placeholder="x2" required>
+                                    <input type="number" step="any" name="y2" class="form-control bg-dark text-light border-secondary" placeholder="y2" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" name="operation" value="distance" class="btn btn-primary btn-sm flex-fill fw-bold">Distance</button>
+                            <button type="submit" name="operation" value="midpoint" class="btn btn-outline-primary btn-sm flex-fill fw-bold">Midpoint</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Line Form -->
+            <div class="tab-pane fade" id="line" role="tabpanel">
+                <div class="card p-4 rounded-4 shadow mb-4">
+                    <form action="{{ url_for('calculate') }}" method="POST">
+                        <h5 class="fw-bold mb-3" style="color: #45a29e;">Line Properties</h5>
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <label class="form-label text-muted small">Start (x, y)</label>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" step="any" name="lx1" class="form-control bg-dark text-light border-secondary" placeholder="x1" required>
+                                    <input type="number" step="any" name="ly1" class="form-control bg-dark text-light border-secondary" placeholder="y1" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label text-muted small">End (x, y)</label>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" step="any" name="lx2" class="form-control bg-dark text-light border-secondary" placeholder="x2" required>
+                                    <input type="number" step="any" name="ly2" class="form-control bg-dark text-light border-secondary" placeholder="y2" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" name="operation" value="line" class="btn btn-primary btn-sm w-100 fw-bold">Calculate Length & Slope</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Triangle Form -->
+            <div class="tab-pane fade" id="triangle" role="tabpanel">
+                <div class="card p-4 rounded-4 shadow mb-4">
+                    <form action="{{ url_for('calculate') }}" method="POST">
+                        <h5 class="fw-bold mb-3" style="color: #45a29e;">Triangle</h5>
+                        <div class="row g-2 mb-4">
+                            <div class="col-4">
+                                <label class="form-label text-muted small">V1</label>
+                                <input type="number" step="any" name="tx1" class="form-control form-control-sm bg-dark text-light border-secondary mb-1" placeholder="x1" required>
+                                <input type="number" step="any" name="ty1" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="y1" required>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label text-muted small">V2</label>
+                                <input type="number" step="any" name="tx2" class="form-control form-control-sm bg-dark text-light border-secondary mb-1" placeholder="x2" required>
+                                <input type="number" step="any" name="ty2" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="y2" required>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label text-muted small">V3</label>
+                                <input type="number" step="any" name="tx3" class="form-control form-control-sm bg-dark text-light border-secondary mb-1" placeholder="x3" required>
+                                <input type="number" step="any" name="ty3" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="y3" required>
+                            </div>
+                        </div>
+                        <button type="submit" name="operation" value="triangle" class="btn btn-primary btn-sm w-100 fw-bold">Area & Perimeter</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Circle Form -->
+            <div class="tab-pane fade" id="circle" role="tabpanel">
+                <div class="card p-4 rounded-4 shadow mb-4">
+                    <form action="{{ url_for('calculate') }}" method="POST">
+                        <h5 class="fw-bold mb-3" style="color: #45a29e;">Circle</h5>
+                        <div class="row g-3 mb-4">
+                            <div class="col-8">
+                                <label class="form-label text-muted small">Center (x, y)</label>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" step="any" name="cx" class="form-control bg-dark text-light border-secondary" placeholder="cx" required>
+                                    <input type="number" step="any" name="cy" class="form-control bg-dark text-light border-secondary" placeholder="cy" required>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label text-muted small">Radius</label>
+                                <input type="number" step="any" name="r" min="0.001" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="r" required>
+                            </div>
+                        </div>
+                        <button type="submit" name="operation" value="circle" class="btn btn-primary btn-sm w-100 fw-bold">Area & Circumference</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Polygon Form -->
+            <div class="tab-pane fade" id="poly" role="tabpanel">
+                <div class="card p-4 rounded-4 shadow mb-4">
+                    <form action="{{ url_for('calculate') }}" method="POST">
+                        <h5 class="fw-bold mb-3" style="color: #45a29e;">Polygon</h5>
+                        <div class="mb-4">
+                            <label class="form-label text-muted small">Vertices (Space-separated "x,y" pairs e.g "0,0 4,0 2,4")</label>
+                            <textarea name="poly_coords" rows="3" class="form-control bg-dark text-light border-secondary" placeholder="0,0 4,0 4,4 0,4" required></textarea>
+                            <div class="form-text text-muted" style="font-size:0.7rem;">Minimum 3 points required.</div>
+                        </div>
+                        <button type="submit" name="operation" value="polygon" class="btn btn-primary btn-sm w-100 fw-bold">Calculate Properties</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="fw-bold mt-2 mb-3" style="color: #66fcf1;">Recent History</h4>
+        <div class="card rounded-4 border-secondary overflow-hidden shadow">
+            <ul class="list-group list-group-flush bg-transparent">
+                {% if history %}
+                    {% for item in history %}
+                        <li class="list-group-item bg-transparent text-light border-secondary py-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="badge bg-secondary">{{ item.operation_type }}</span>
+                                <small class="text-muted" style="font-size: 0.75em;">{{ item.timestamp.strftime('%H:%M') }}</small>
+                            </div>
+                            <div class="text-muted small mb-1 fst-italic">{{ item.input_data }}</div>
+                            <div class="fw-bold text-success" style="font-size: 0.9em;">{{ item.result }}</div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item bg-transparent border-secondary text-muted text-center py-4">
+                        <small>No calculations yet.</small>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Right Column: Visualization -->
+    <div class="col-md-7">
+        <h3 class="fw-bold mb-4" style="color: #66fcf1;">Visualization</h3>
+        <div class="card rounded-4 p-2 shadow h-100" style="min-height: 500px;">
+            <div id="plot" class="w-100 h-100 rounded-3"></div>
+        </div>
+    </div>
+</div>
+
+<script id="plot-data" type="application/json">
+    {{ plot_data|safe if plot_data else 'null' }}
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const plotDataEl = document.getElementById('plot-data');
+        let plotData = null;
+        try {
+            plotData = JSON.parse(plotDataEl.textContent.trim());
+        } catch (e) {
+            console.error("No valid plot data");
+        }
+        
+        const plotDiv = document.getElementById('plot');
+        
+        const layout = {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#c5c6c7' },
+            margin: { t: 30, r: 30, b: 30, l: 30 },
+            xaxis: {
+                gridcolor: 'rgba(102, 252, 241, 0.1)',
+                zerolinecolor: 'rgba(102, 252, 241, 0.5)',
+                title: 'X Axis'
+            },
+            yaxis: {
+                gridcolor: 'rgba(102, 252, 241, 0.1)',
+                zerolinecolor: 'rgba(102, 252, 241, 0.5)',
+                title: 'Y Axis'
+            },
+            showlegend: true,
+            legend: {
+                x: 0.05,
+                y: 1,
+                bgcolor: 'rgba(31, 40, 51, 0.8)',
+                bordercolor: 'rgba(102, 252, 241, 0.5)',
+                borderwidth: 1
+            }
+        };
+
+        const config = { responsive: true };
+
+        if (plotData) {
+            // Give Plotly a unified color theme
+            plotData.forEach(trace => {
+                if(trace.mode && trace.mode.includes('lines')) {
+                    if(!trace.line) trace.line = {};
+                    trace.line.color = '#66fcf1';
+                    trace.line.width = 3;
+                }
+                if(trace.mode && trace.mode.includes('markers')) {
+                    if(!trace.marker) trace.marker = {};
+                    if(!trace.marker.color) trace.marker.color = '#45a29e';
+                    if(!trace.marker.size) trace.marker.size = 8;
+                }
+                if(trace.fill) {
+                    trace.fillcolor = 'rgba(69, 162, 158, 0.2)';
+                }
+            });
+            Plotly.newPlot(plotDiv, plotData, layout, config);
+        } else {
+            // Draw empty grid if no data
+            Plotly.newPlot(plotDiv, [], layout, config);
+        }
+    });
+</script>
+{% endblock %}
